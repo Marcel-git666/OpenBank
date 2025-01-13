@@ -19,6 +19,6 @@ final class AccountListViewModel {
     }
 
     func fetchAccounts() async throws {
-        
+        accounts = [Account.sampleData]
     }
 }
