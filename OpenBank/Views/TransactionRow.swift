@@ -14,17 +14,19 @@ struct TransactionRow: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(transaction.typeDescription)
                 .font(.headline)
+                .foregroundColor(.primary) // Hlavní barva pro název transakce
 
             HStack {
-                Text("Částka: \(transaction.amount.value, specifier: "%.2f") \(transaction.amount.currency)")
+                Text("Ammount: \(transaction.amount.value, specifier: "%.2f") \(transaction.amount.currency)")
+                    .foregroundColor(transaction.amount.value > 0 ? .green : .red) // Zelená pro příjem, červená pro výdaj
                 Spacer()
-                Text("Datum: \(transaction.processingDate)")
+                Text("Date: \(transaction.processingDate)")
             }
             .font(.subheadline)
-            .foregroundColor(.secondary)
+            .foregroundColor(.secondary) // Sekundární barva pro detailní informace
         }
         .padding()
-        .background(Color(UIColor.secondarySystemBackground))
+        .background(Color(UIColor.secondarySystemBackground)) // Světle šedé pozadí
         .cornerRadius(8)
     }
 }
@@ -32,3 +34,4 @@ struct TransactionRow: View {
 #Preview {
     TransactionRow(transaction: Transaction.sampleData[0])
 }
+
