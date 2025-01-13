@@ -8,29 +8,43 @@
 import SwiftUI
 
 struct AccountListView: View {
-    let accounts: [Account] // Později propojené s VM
-
+    @Bindable var viewModel: AccountListViewModel
+    
     var body: some View {
         NavigationView {
             ZStack {
                 Color.green
                     .opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
-                List(accounts) { account in
-                    VStack(alignment: .leading) {
-                        Text(account.name).bold()
-                        Text(account.balance.formatted(.currency(code: account.currency ?? "CZK")))
+                if viewModel.accounts.isEmpty {
+                    Text(viewModel.error ?? "No accounts available.")
+                        .foregroundColor(.red)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                } else {
+                    List(viewModel.accounts) { account in
+                        VStack(alignment: .leading) {
+                            Text(account.name).bold()
+                            Text(account.balance.formatted(.currency(code: account.currency ?? "CZK")))
+                        }
+                        .listRowBackground(Color.yellow.opacity(0.4))
                     }
-                    .listRowBackground(Color.yellow.opacity(0.4))
+                    .scrollContentBackground(.hidden)
                 }
-                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Accounts")
+        }
+        .task {
+            do {
+                try await viewModel.fetchAccounts() 
+            } catch {
+                print("Failed to fetch accounts: \(error.localizedDescription)")
+            }
         }
     }
 }
 
 #Preview {
-    AccountListView(accounts: [Account.sampleData])
+    AccountListView(viewModel: AccountListViewModel())
 }
 

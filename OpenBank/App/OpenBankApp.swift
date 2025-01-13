@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct OpenBankApp: App {
+    let viewModel = AccountListViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AccountListView(viewModel: viewModel)
         }
     }
 }
