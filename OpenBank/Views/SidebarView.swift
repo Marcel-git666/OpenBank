@@ -9,18 +9,33 @@ import SwiftUI
 
 struct SidebarView: View {
     @Bindable var viewModel: AccountListViewModel
-
+    @State private var searchInput: String = ""
+    
     var body: some View {
         List {
             Section(header: Text("Filters")) {
                 Button("All Accounts") {
-                    // Logika pro zobrazení všech účtů
+                    viewModel.setFilter(.all)
                 }
                 Button("Positive Balances") {
-                    // Logika pro filtrování účtů s kladným zůstatkem
+                    viewModel.setFilter(.positive)
                 }
                 Button("Negative Balances") {
-                    // Logika pro filtrování účtů se záporným zůstatkem
+                    viewModel.setFilter(.negative)
+                }
+            }
+            Section(header: Text("Search")) {
+                HStack {
+                    TextField("Search accounts...", text: $searchInput, onCommit: {
+                        viewModel.setSearchText(searchInput)
+                    })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    Button(action: {
+                        viewModel.setSearchText(searchInput)
+                    }) {
+                        Text("Search")
+                    }
                 }
             }
         }
