@@ -15,7 +15,9 @@ Due to the sandbox API limitations, all account details and transactions return 
 
 This design highlights the flexibility of the architecture and ensures the app remains functional despite API limitations.
 
+## Best Experience
 
+The application is best experienced on an iPad in landscape mode. The larger screen size and horizontal layout provide optimal usability and readability.
 
 ## Setup
 1. Clone the repository:
