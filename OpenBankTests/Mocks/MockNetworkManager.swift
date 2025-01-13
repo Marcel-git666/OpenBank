@@ -10,12 +10,14 @@ import Foundation
 
 final class MockNetworkManager: NetworkManaging {
     private let shouldFail: Bool
+    var wasFetchCalled = false
 
     init(shouldFail: Bool = false) {
         self.shouldFail = shouldFail
     }
 
     func fetch<T: Decodable>(from endpoint: Endpoint) async throws -> T {
+        wasFetchCalled = true
         if shouldFail {
             throw NetworkError.invalidResponse
         }

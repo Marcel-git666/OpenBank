@@ -25,12 +25,24 @@ struct AccountListViewModelTests {
     func testFetchAccountsFailure() async throws {
         let mockManager = MockNetworkManager(shouldFail: true)
         let viewModel = AccountListViewModel(networkManager: mockManager)
-
         do {
             try await viewModel.fetchAccounts()
         } catch {
-            #expect(viewModel.accounts.isEmpty)
-            #expect(viewModel.error != nil)
+            #expect(viewModel.accounts.isEmpty, "Accounts should be empty when fetch fails")
+            #expect(viewModel.error == "Invalid response received from the server.")
         }
     }
+    
+    @Test("Fetch accounts calls networkManager")
+    func testFetchAccountsCallsNetworkManager() async throws {
+        let mockManager = MockNetworkManager()
+        let viewModel = AccountListViewModel(networkManager: mockManager)
+        
+        // Spusť fetchAccounts
+        try await viewModel.fetchAccounts()
+        
+        // Ověř, že mockManager byl volán
+        #expect(mockManager.wasFetchCalled == true)
+    }
+
 }
