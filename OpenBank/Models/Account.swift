@@ -25,6 +25,8 @@ struct Account: Codable, Identifiable, Hashable {
     let currency: String?
     let name: String
     let iban: String
+    let description: String?
+    let statements: [String]?
     
-    static var sampleData  = Account(accountNumber: "00000-0123456789", bankCode: "0800", transparencyFrom: "", transparencyTo: "", publicationTo: "", actualizationDate: "", balance: 2_000_000.99, currency: "CZK", name: "Ceska narodni banka", iban: "CZ 0800 0000 0012 3456 7890")
+    static var sampleData  = Account(accountNumber: "00000-0123456789", bankCode: "0800", transparencyFrom: "", transparencyTo: "", publicationTo: "", actualizationDate: "", balance: 2_000_000.99, currency: "CZK", name: "Ceska narodni banka", iban: "CZ 0800 0000 0012 3456 7890", description: "Nice and long description", statements: nil)
 }
