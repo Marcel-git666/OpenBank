@@ -17,10 +17,24 @@ struct AccountListView: View {
                     .opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
                 if viewModel.accounts.isEmpty {
-                    Text(viewModel.error ?? "No accounts available.")
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                        .padding()
+                    VStack(spacing: 16) {
+                        Text(viewModel.error ?? "No accounts available.")
+                            .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                        Button(action: {
+                            Task {
+                                await refreshAccounts()
+                            }
+                        }) {
+                            Text("Retry")
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                    }
+                    .padding()
                 } else {
                     List(viewModel.accounts) { account in
                         VStack(alignment: .leading) {
@@ -33,13 +47,20 @@ struct AccountListView: View {
                 }
             }
             .navigationTitle("Accounts")
+            .refreshable {
+                await refreshAccounts()
+            }
         }
         .task {
-            do {
-                try await viewModel.fetchAccounts() 
-            } catch {
-                print("Failed to fetch accounts: \(error.localizedDescription)")
-            }
+            await refreshAccounts()
+        }
+    }
+    
+    private func refreshAccounts() async {
+        do {
+            try await viewModel.fetchAccounts()
+        } catch {
+            print("Failed to refresh accounts: \(error.localizedDescription)")
         }
     }
 }
