@@ -36,6 +36,9 @@ final class TransactionViewModel {
     }
     
     func fetchTransactions(for accountNumber: String) async throws {
-        
+        self.transactions = []
+        let endpoint = AccountTransactionsEndpoint(accountNumber: accountNumber)
+        let response: TransactionResponse = try await networkManager.fetch(from: endpoint)
+        self.transactions = response.transactions
     }
 }
