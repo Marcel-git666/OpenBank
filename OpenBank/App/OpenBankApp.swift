@@ -12,7 +12,7 @@ struct OpenBankApp: App {
     let viewModel = AccountListViewModel()
     var body: some Scene {
         WindowGroup {
-            AccountListView(viewModel: viewModel)
+            MainSplitView(viewModel: viewModel)
         }
     }
 }
