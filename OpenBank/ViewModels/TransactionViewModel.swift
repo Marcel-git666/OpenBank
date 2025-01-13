@@ -19,8 +19,18 @@ final class TransactionViewModel {
     }
     
     func fetchAccountDetails(accountNumber: String) async throws {
-        let endpoint = AccountDetailEndpoint(accountNumber: accountNumber)
-        let accountDetails: Account = try await networkManager.fetch(from: endpoint)
-        self.selectedAccountDetails = accountDetails
+        do {
+            let endpoint = AccountDetailEndpoint(accountNumber: accountNumber)
+            let accountDetails: Account = try await networkManager.fetch(from: endpoint)
+            self.selectedAccountDetails = accountDetails
+        } catch let networkError as NetworkError {
+            selectedAccountDetails = nil
+            error = networkError.errorDescription
+            throw networkError
+        } catch {
+            selectedAccountDetails = nil
+            self.error = error.localizedDescription
+            throw NetworkError.invalidResponse
+        }
     }
 }
