@@ -8,18 +8,25 @@
 import SwiftUI
 
 struct AccountDetailView: View {
+    let account: Account?
     var body: some View {
-        VStack {
-            Text("Account Detail")
-                .font(.largeTitle)
-                .padding()
-            
-            Spacer()
+        if let account {
+            VStack {
+                Text(account.name)
+                    .font(.largeTitle)
+                    .padding()
+                Text("Account description: \(account.description ?? "-")")
+                Spacer()
+            }
+            .navigationTitle("Detail")
+        } else {
+            Text("Choose an account for details.")
+                .foregroundColor(.secondary)
+                .font(.headline)
         }
-        .navigationTitle("Detail")
     }
 }
 
 #Preview {
-    AccountDetailView()
+    AccountDetailView(account: Account.sampleData)
 }

@@ -36,12 +36,16 @@ struct AccountListView: View {
                     }
                     .padding()
                 } else {
-                    List(viewModel.accounts) { account in
-                        VStack(alignment: .leading) {
-                            Text(account.name).bold()
-                            Text(account.balance.formatted(.currency(code: account.currency ?? "CZK")))
+                    List(viewModel.accounts, selection: $viewModel.selectedAccount) { account in
+                        Button(action: {
+                            viewModel.selectedAccount = account
+                        }) {
+                            VStack(alignment: .leading) {
+                                Text(account.name).bold()
+                                Text(account.balance.formatted(.currency(code: account.currency ?? "CZK")))
+                            }
+                            .listRowBackground(Color.yellow.opacity(0.4))
                         }
-                        .listRowBackground(Color.yellow.opacity(0.4))
                     }
                     .scrollContentBackground(.hidden)
                 }

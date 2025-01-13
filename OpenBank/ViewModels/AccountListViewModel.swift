@@ -11,7 +11,7 @@ import Foundation
 final class AccountListViewModel {
     var accounts: [Account] = []
     var error: String?
-    
+    var selectedAccount: Account? = nil
     private let networkManager: NetworkManaging
     
     init(networkManager: NetworkManaging = NetworkManager.shared) {

@@ -17,7 +17,7 @@ struct MainSplitView: View {
         } content: {
             AccountListView(viewModel: viewModel)
         } detail: {
-            AccountDetailView() // Detail
+            AccountDetailView(account: viewModel.selectedAccount)
         }
     }
 }
