@@ -16,7 +16,7 @@ struct AccountListView: View {
                 Color.green
                     .opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
-                if viewModel.accounts.isEmpty {
+                if viewModel.filteredAccounts.isEmpty {
                     VStack(spacing: 16) {
                         Text(viewModel.error ?? "No accounts available.")
                             .foregroundColor(.red)
@@ -36,7 +36,7 @@ struct AccountListView: View {
                     }
                     .padding()
                 } else {
-                    List(viewModel.accounts, selection: $viewModel.selectedAccount) { account in
+                    List(viewModel.filteredAccounts, selection: $viewModel.selectedAccount) { account in
                         Button(action: {
                             viewModel.selectedAccount = account
                         }) {
