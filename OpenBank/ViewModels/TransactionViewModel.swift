@@ -9,7 +9,7 @@ import Foundation
 
 @Observable
 final class TransactionViewModel {
-    var selectedAccount: Account? 
+    var selectedAccountDetails: Account?
     var error: String?
     
     private let networkManager: NetworkManaging
@@ -19,5 +19,8 @@ final class TransactionViewModel {
     }
     
     func fetchAccountDetails(accountNumber: String) async throws {
+        let endpoint = AccountDetailEndpoint(accountNumber: accountNumber)
+        let accountDetails: Account = try await networkManager.fetch(from: endpoint)
+        self.selectedAccountDetails = accountDetails
     }
 }

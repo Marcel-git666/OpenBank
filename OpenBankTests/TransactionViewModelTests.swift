@@ -20,8 +20,8 @@ struct TransactionViewModelTests {
         try await viewModel.fetchAccountDetails(accountNumber: "000000-2906478309")
         
         // Assert
-        #expect(viewModel.selectedAccount != nil)
-        #expect(viewModel.selectedAccount?.description == Account.sampleData.description, "Description should match sample data")
+        #expect(viewModel.selectedAccountDetails != nil)
+        #expect(viewModel.selectedAccountDetails?.description == Account.sampleData.description, "Description should match sample data")
         #expect(viewModel.error == nil, "Error should be nil when fetch succeeds")
     }
     
@@ -35,7 +35,7 @@ struct TransactionViewModelTests {
         do {
             try await viewModel.fetchAccountDetails(accountNumber: "000000-2906478309")
         } catch {
-            #expect(viewModel.selectedAccount == nil)
+            #expect(viewModel.selectedAccountDetails == nil)
             #expect(viewModel.error != nil, "Error should not be nil when fetch fails")
         }
     }

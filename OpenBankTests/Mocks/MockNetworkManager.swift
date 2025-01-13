@@ -22,7 +22,13 @@ final class MockNetworkManager: NetworkManaging {
             throw NetworkError.invalidResponse
         }
 
-        let response = AccountsResponse(accounts: [Account.sampleData])
-        return response as! T
+        switch endpoint {
+        case is AccountDetailEndpoint:
+            return Account.sampleData as! T
+        case is AccountEndpoint:
+            let response = AccountsResponse(accounts: [Account.sampleData])
+            return response as! T
+        default: fatalError("Unknown endpoint \(endpoint)")
+        }
     }
 }
