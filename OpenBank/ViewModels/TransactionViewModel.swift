@@ -10,6 +10,7 @@ import Foundation
 @Observable
 final class TransactionViewModel {
     var selectedAccountDetails: Account?
+    var transactions: [Transaction] = []
     var error: String?
     
     private let networkManager: NetworkManaging
@@ -32,5 +33,9 @@ final class TransactionViewModel {
             self.error = error.localizedDescription
             throw NetworkError.invalidResponse
         }
+    }
+    
+    func fetchTransactions(for accountNumber: String) async throws {
+        
     }
 }

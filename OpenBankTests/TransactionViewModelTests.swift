@@ -40,4 +40,33 @@ struct TransactionViewModelTests {
         }
     }
     
+    @Test("Fetch transactions successfully")
+    func testFetchTransactionsSuccess() async throws {
+        // Arrange
+        let mockManager = MockNetworkManager()
+        let viewModel = TransactionViewModel(networkManager: mockManager)
+        
+        // Act
+        try await viewModel.fetchTransactions(for: "000000-2906478309")
+        
+        // Assert
+        #expect(viewModel.transactions.count > 0, "Transactions should not be empty when fetch succeeds")
+        #expect(viewModel.error == nil, "Error should be nil when fetch succeeds")
+    }
+    
+    @Test("Handle fetch transactions error")
+    func testFetchTransactionsFailure() async {
+        // Arrange
+        let mockManager = MockNetworkManager(shouldFail: true)
+        let viewModel = TransactionViewModel(networkManager: mockManager)
+        
+        // Act
+        do {
+            try await viewModel.fetchTransactions(for: "000000-2906478309")
+        } catch {
+            // Assert
+            #expect(viewModel.transactions.isEmpty, "Transactions should be empty when fetch fails")
+            #expect(viewModel.error != nil, "Error should not be nil when fetch fails")
+        }
+    }
 }
