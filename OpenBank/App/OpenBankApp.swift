@@ -10,9 +10,10 @@ import SwiftUI
 @main
 struct OpenBankApp: App {
     let viewModel = AccountListViewModel()
+    let transactionViewModel = TransactionViewModel()
     var body: some Scene {
         WindowGroup {
-            MainSplitView(viewModel: viewModel)
+            MainSplitView(viewModel: viewModel, transactionViewModel: transactionViewModel)
         }
     }
 }
